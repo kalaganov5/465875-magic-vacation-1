@@ -1,10 +1,34 @@
+@mixin animation-social-block-list {
+  li {
+    opacity: 1;
+    transition-property: opacity, transform;
+    transition-timing-function: linear;
+    transition-duration: 250ms, 150ms;
+    transform: translateY(0);
+  }
+
+  @for $i from 0 through 5 {
+    li:nth-child(#{$i}) {
+      transition-delay: 100ms * $i;
+    }
+  }
+}
+
 .social-block {
   position: relative;
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     .social-block__list {
-      opacity: 1;
-      pointer-events: auto;
+      @include animation-social-block-list;
+      // pointer-events: auto; VIN?
+    }
+  }
+
+
+  &--active {
+    .social-block__list {
+      @include animation-social-block-list;
     }
   }
 }
@@ -17,6 +41,8 @@
   height: 4rem;
   color: $c-dark;
   border-radius: 50%;
+  transition: 250ms color linear;
+  transition-property: color;
 
   @media (max-width: $tablet) and (orientation: portrait) {
     display: none;
@@ -35,6 +61,10 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
+
+    transition-property: width, height, background-color;
+    transition-timing-function: linear;
+    transition-duration: 250ms;
   }
 
   svg {
@@ -63,8 +93,8 @@
     }
 
     & + .social-block__list {
-      opacity: 1;
       pointer-events: auto;
+      @include animation-social-block-list;
     }
   }
 
@@ -87,7 +117,6 @@
   top: 100%;
   right: 0;
   margin-top: 1.5rem;
-  opacity: 0;
   pointer-events: none;
 
   @media (min-width: $stop-scaling) {
@@ -146,6 +175,10 @@
     flex: none;
     margin-bottom: 0.5rem;
 
+    opacity: 0;
+    transform: translateY(50%);
+
+
     @media (min-width: $stop-scaling) {
       margin-bottom: 5px;
     }
@@ -168,6 +201,7 @@
   color: $c-light;
   border: 2px solid transparent;
   border-radius: 50%;
+  transition: 250ms color linear;
 
   @media (min-width: $stop-scaling) {
     width: 40px;
