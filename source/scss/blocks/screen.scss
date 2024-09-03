@@ -17,6 +17,21 @@
   @media (max-width: $tablet - 1) and (orientation: landscape) {
     height: 100vh;
   }
+
+  .intro__message {
+    opacity: 0;
+    transform: translateY(30%);
+    transition-property: transform, opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 500ms;
+  }
+
+  &.active {
+    .intro__message {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 .screen__wrapper {
